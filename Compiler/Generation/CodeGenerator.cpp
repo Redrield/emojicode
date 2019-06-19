@@ -37,7 +37,7 @@
 
 namespace EmojicodeCompiler {
 
-CodeGenerator::CodeGenerator(Compiler *compiler, bool optimize)
+CodeGenerator::CodeGenerator(Compiler *compiler, bool optimize, std::string targetTriple_)
 : compiler_(compiler), typeHelper_(context(), this),
   module_(std::make_unique<llvm::Module>(compiler->mainPackage()->name(), context())),
   pool_(std::make_unique<StringPool>(this)), runTime_(std::make_unique<RunTimeHelper>(this)),
@@ -50,7 +50,13 @@ CodeGenerator::CodeGenerator(Compiler *compiler, bool optimize)
     llvm::InitializeAllAsmParsers();
     llvm::InitializeAllAsmPrinters();
 
-    auto targetTriple = llvm::sys::getDefaultTargetTriple();
+    std::string targetTriple;
+    if(targetTriple_ == "") {
+        targetTriple = llvm::sys::getDefaultTargetTriple();
+    }else {
+        targetTriple = targetTriple_;
+    };
+
     std::string error;
     auto target = llvm::TargetRegistry::lookupTarget(targetTriple, error);
 

@@ -31,6 +31,8 @@ Options::Options(int argc, char *argv[]) {
     args::ValueFlag<std::string> package(parser, "package", "The name of the package", {'p'});
     args::ValueFlag<std::string> out(parser, "out", "Set output path for binary or assembly", {'o'});
     args::ValueFlag<std::string> interfaceOut(parser, "interface", "Output interface to given path", {'i'});
+    args::ValueFlag<std::string> targetTriple(parser, "target", "LLVM triple of the compilation target", {"target"});
+    args::ValueFlag<std::string> linker(parser, "linker", "The linker to use to link the produced object files", {"linker"});
     args::Flag report(parser, "report", "Generate a JSON report about the package", {'r'});
     args::Flag object(parser, "object", "Produce object file, do not link", {'c'});
     args::Flag json(parser, "json", "Show compiler messages as JSON", {"json"});
@@ -47,6 +49,7 @@ Options::Options(int argc, char *argv[]) {
 
         readEnvironment(searchPaths.Get());
 
+        targetTriple_ = targetTriple.Get();
         report_ = report.Get();
         mainFile_ = file.Get();
         jsonOutput_ = json.Get();
@@ -154,6 +157,9 @@ std::unique_ptr<CompilerDelegate> Options::compilerDelegate() const {
 std::string Options::linker() const {
     if (auto var = getenv("CXX")) {
         return var;
+    }
+    if(!linker_.empty()) {
+        return linker_;
     }
     return "c++";
 }

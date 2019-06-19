@@ -61,7 +61,7 @@ void Compiler::PrintInterfacePhase::perform(Compiler *compiler) {
 
 void Compiler::GenerationPhase::perform(Compiler *compiler) {
     assert(compiler->generator_ == nullptr);
-    compiler->generator_ = std::make_unique<CodeGenerator>(compiler, optimize_);
+    compiler->generator_ = std::make_unique<CodeGenerator>(compiler, optimize_, target_);
     compiler->generator_->generate();
 }
 

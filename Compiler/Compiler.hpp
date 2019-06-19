@@ -93,10 +93,11 @@ public:
     class GenerationPhase final : public Phase {
     public:
         /// @param optimize Whether optimizations should be run.
-        GenerationPhase(bool optimize) : optimize_(optimize) {}
+        GenerationPhase(bool optimize, std::string target = "") : optimize_(optimize), target_(target) {}
         void perform(Compiler *compiler) override;
     private:
         bool optimize_;
+        std::string target_;
     };
 
     /// Emits the generated code to an object file. Must be preceded by GenerationPhase.

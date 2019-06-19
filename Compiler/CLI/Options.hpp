@@ -42,6 +42,7 @@ public:
     bool pack() const { return pack_; }
     bool standalone() const { return mainPackageName_ == "_"; }
 
+    const std::string& target() const { return targetTriple_; }
     const std::string& outPath() const { return outPath_; }
     const std::string& mainFile() const { return mainFile_; }
     const std::string& interfaceFile() const { return interfaceFile_; }
@@ -62,6 +63,8 @@ private:
     std::string mainFile_;
     std::string interfaceFile_;
     std::string reportPath_;
+    std::string targetTriple_;
+    std::string linker_;
     std::string llvmIr_;
     std::vector<std::string> packageSearchPaths_;
     std::string mainPackageName_ = "_";

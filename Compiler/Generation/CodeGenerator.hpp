@@ -41,7 +41,7 @@ class CodeGenerator {
 public:
     /// Creates a CodeGenerator bound to the provided Compiler.
     /// @param optimize Whether optimizations should be run.
-    CodeGenerator(Compiler *compiler, bool optimize);
+    CodeGenerator(Compiler *compiler, bool optimize, std::string targetTriple_ = "");
 
     /// Generates the package.
     void generate();

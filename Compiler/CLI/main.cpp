@@ -49,7 +49,7 @@ bool start(const Options &options) {
     if (!options.interfaceFile().empty()) {
         compiler.add<Compiler::PrintInterfacePhase>(options.interfaceFile());
     }
-    compiler.add<Compiler::GenerationPhase>(options.optimize());
+    compiler.add<Compiler::GenerationPhase>(options.optimize(), options.target());
     if (!options.llvmIrPath().empty()) {
         compiler.add<Compiler::LLVMIREmissionPhase>(options.llvmIrPath());
     }
